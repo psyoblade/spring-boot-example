@@ -25,10 +25,15 @@ dependencies {
     // TestNG is also supported by the Gradle Test task. Just change the
     // testCompile dependency to testCompile 'org.testng:testng:6.8.1' and add
     // 'test.useTestNG()' to your build script.
+    testCompile 'junit:junit:4.12'
     testCompile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
     testCompile group: 'com.wix', name: 'wix-embedded-mysql', version: '4.1.2'
     testCompile group: 'ch.vorburger.mariaDB4j', name: 'mariaDB4j', version: '2.2.3'
     testCompile group: 'commons-dbutils', name: 'commons-dbutils', version: '1.6'
     testCompile group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.3.0'
-    testCompile 'junit:junit:4.12'
+    testCompile group: 'org.apache.parquet', name: 'parquet-avro', version: '1.9.0'
+    testCompile group: 'commons-io', name: 'commons-io', version: '2.5'
+    testCompile group: 'com.google.guava', name: 'guava', version: '20.0'
+    testCompile group: 'org.apache.hadoop', name: 'hadoop-client', version: '2.7.3'
+
 }
