@@ -1,7 +1,7 @@
 package me.suhyuk.springboot;
 
-import me.suhyuk.springboot.services.MyService;
-import me.suhyuk.springboot.configs.MyConfig;
+import me.suhyuk.springboot.service.MyService;
+import me.suhyuk.springboot.config.MyConfig;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 

@@ -1,4 +1,4 @@
-package me.suhyuk.springboot.components;
+package me.suhyuk.springboot.component;
 
 import org.springframework.stereotype.Component;
 

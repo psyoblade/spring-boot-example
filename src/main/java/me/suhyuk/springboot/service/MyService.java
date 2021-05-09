@@ -1,4 +1,4 @@
-package me.suhyuk.springboot.services;
+package me.suhyuk.springboot.service;
 
 public class MyService {
 

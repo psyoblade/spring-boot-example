@@ -1,14 +1,13 @@
-package me.suhyuk.springboot.controllers;
+package me.suhyuk.springboot.controller;
 
-import me.suhyuk.springboot.interfaces.ICalculatorController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/calculator")
-public class CalculatorController implements ICalculatorController {
+@RequestMapping("/calculator/v1")
+public class CalculatorControllerV1 implements ICalculatorController {
 
     private int i0 = 0; // 덧셈의 항등원 (identity)
     private int i1 = 1; // 곱셈의 항등원
