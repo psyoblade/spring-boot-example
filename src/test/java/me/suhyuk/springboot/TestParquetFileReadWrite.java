@@ -1,4 +1,4 @@
-package com.ncsoft.dataplatform.dummies.springboot;
+package me.suhyuk.springboot;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.io.Resources;

@@ -1,4 +1,4 @@
-package com.ncsoft.dataplatform.dummies.springboot;
+package me.suhyuk.springboot;
 
 import ch.vorburger.exec.ManagedProcessException;
 import ch.vorburger.mariadb4j.DB;

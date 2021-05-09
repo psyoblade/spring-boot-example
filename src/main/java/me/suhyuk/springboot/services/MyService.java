@@ -1,4 +1,4 @@
-package com.ncsoft.dataplatform.dummies.spring.services;
+package me.suhyuk.springboot.services;
 
 public class MyService {
 

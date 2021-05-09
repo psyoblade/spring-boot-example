@@ -1,4 +1,4 @@
-package com.ncsoft.dataplatform.dummies.spring.components;
+package me.suhyuk.springboot.components;
 
 import org.springframework.stereotype.Component;
 

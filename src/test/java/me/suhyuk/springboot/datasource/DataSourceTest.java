@@ -1,4 +1,4 @@
-package com.ncsoft.dataplatform.dummies.springboot.datasource;
+package me.suhyuk.springboot.datasource;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

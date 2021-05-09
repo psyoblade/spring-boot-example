@@ -1,6 +1,6 @@
-package com.ncsoft.dataplatform.dummies.spring.configs;
+package me.suhyuk.springboot.configs;
 
-import com.ncsoft.dataplatform.dummies.spring.services.MyService;
+import me.suhyuk.springboot.services.MyService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

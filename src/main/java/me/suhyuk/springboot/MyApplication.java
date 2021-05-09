@@ -1,7 +1,7 @@
-package com.ncsoft.dataplatform.dummies.spring;
+package me.suhyuk.springboot;
 
-import com.ncsoft.dataplatform.dummies.spring.configs.MyConfig;
-import com.ncsoft.dataplatform.dummies.spring.services.MyService;
+import me.suhyuk.springboot.services.MyService;
+import me.suhyuk.springboot.configs.MyConfig;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
