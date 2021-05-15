@@ -111,6 +111,85 @@ public void serve() throws InterruptedException {
 }
 ```
 
+## 5. 멀티 프로젝트 구성
+> 기존 프로젝트가 싱글 프로젝트이므로 별도의 브랜치(private/psyoblade)를 통해 구성을 변경합니다
+
+* 그레이들 버전 통일
+  - Spring Boot plugin requires Gradle 4.4 or later. The current version is Gradle 3.4.1
+```bash
+$ cat gradle/wrapper/gradle-wrapper.properties
+distributionUrl=https\://services.gradle.org/distributions/gradle-4.4-all.zip
+distributionBase=GRADLE_USER_HOME
+distributionPath=wrapper/dists
+zipStorePath=wrapper/dists
+zipStoreBase=GRADLE_USER_HOME
+```
+
+
+* 멀티 프로젝트 구성을 변경
+```bash
+$ cat settings.gradle
+rootProject.name = 'spring-boot-example'
+include 'example-common', 'example-web'
+
+$ tree -L 3
+example-common/src/main/java
+example-common/src/main/resources
+example-web/src/main/java
+example-web/src/main/resources
+
+$ cat build.gradle
+buildscript {
+  ext {
+    springBootVersion = '2.1.6.RELEASE'
+  }
+
+  repositories { // 반드시 buildscript 및 subproject 모두 명시되어야 합니다
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    classpath "io.spring.gradle:dependency-management-plugin:0.6.0.RELEASE"
+  }
+}
+
+subprojects {
+  group 'me.suhyuk'
+  version '1.0'
+
+  apply plugin: 'java'
+  apply plugin: 'org.springframework.boot'
+  apply plugin: 'io.spring.dependency-management'
+
+  sourceCompatibility = 1.8
+
+  repositories {
+    mavenCentral()
+  }
+
+  dependencies {
+    testCompile group: 'junit', name 'junit', version: '4.12'
+  }
+}
+
+project('example-common') {
+  dependencies {
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: springBootVersion
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: springBootVersion
+  }
+}
+
+project('example-web') {
+  dependencies {
+    compile project('example-common')
+  }
+}
+```
+
+
+
+
 ## 9. References
 * [Measure Elapsed Time in Java](https://www.baeldung.com/java-measure-elapsed-time)
 * [Spring @RequestParam Annotation](https://www.baeldung.com/spring-request-param)
