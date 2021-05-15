@@ -7,8 +7,11 @@ buildscript {
     }
 
     repositories {
-        jcenter()
+        mavenCentral()
     }
+
+    apply plugin: 'java-library'
+    apply plugin: 'maven-publish'
 
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -21,6 +24,7 @@ subprojects {
     version '1.0'
 
     apply plugin: 'java'
+    apply plugin: 'maven-publish'
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
 
@@ -43,24 +47,10 @@ project(':example-common') {
 
 project(':example-web') {
     dependencies {
-        implementation project(':example-common')
+        implementation group: 'me.suhyuk', name: 'common-logger', version: '1.0'
         implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: springBootVersion
         testImplementation group: 'org.springframework', name: 'spring-test', version: springVersion
         testImplementation group: 'org.slf4j', name: 'slf4j-simple', version: slf4jVersion
     }
 }
 
-// dependencies {
-//    implementation group: 'org.springframework', name: 'spring-beans', version: springVersion
-//    implementation group: 'org.springframework', name: 'spring-context', version: springVersion
-//    implementation group: 'org.springframework', name: 'spring-jdbc', version: springVersion
-//    testImplementation group: 'com.wix', name: 'wix-embedded-mysql', version: '4.1.2'
-//    testImplementation group: 'ch.vorburger.mariaDB4j', name: 'mariaDB4j', version: '2.2.3'
-//    testImplementation group: 'commons-dbutils', name: 'commons-dbutils', version: '1.6'
-//    testImplementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.3.0'
-//    testImplementation group: 'org.apache.parquet', name: 'parquet-avro', version: '1.9.0'
-//    testImplementation group: 'commons-io', name: 'commons-io', version: '2.5'
-//    testImplementation group: 'com.google.guava', name: 'guava', version: '20.0'
-//    testImplementation group: 'org.apache.hadoop', name: 'hadoop-client', version: '2.7.3'
-//
-// }
