@@ -111,11 +111,10 @@ public void serve() throws InterruptedException {
 }
 ```
 
-
 ## 9. References
 * [Measure Elapsed Time in Java](https://www.baeldung.com/java-measure-elapsed-time)
 * [Spring @RequestParam Annotation](https://www.baeldung.com/spring-request-param)
 * [Implementing a Custom Spring AOP Annotation](https://www.baeldung.com/spring-aop-annotation)
 * [Spring YAML Configuration](https://www.baeldung.com/spring-yaml)
-
+* [Spring MVC Framework and REST](https://www.genuitec.com/spring-frameworkrestcontroller-vs-controller/)
 * [Embedded MariaDB4J](https://github.com/vorburger/MariaDB4j)
