@@ -11,14 +11,21 @@ apply plugin: 'java'
 
 // In this section you declare where to find the dependencies of your project
 repositories {
-    // Use 'jcenter' for resolving your dependencies.
-    // You can declare any Maven/Ivy/file repository here.
-    jcenter()
+    mavenCentral()
+    flatDir {
+        dirs 'libs'
+    }
 }
 
 ext {
     springBootVersion = '2.1.6.RELEASE'
     springVersion = '4.3.21.RELEASE'
+}
+
+allprojects {
+    apply plugin: 'java'
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 }
 
 // In this section you declare the dependencies for your production and test code
@@ -31,10 +38,8 @@ dependencies {
     compile group: 'org.springframework', name: 'spring-context', version: springVersion
     compile group: 'org.springframework', name: 'spring-jdbc', version: springVersion
 
-    // Declare the dependency for your favourite test framework you want to use in your tests.
-    // TestNG is also supported by the Gradle Test task. Just change the
-    // testCompile dependency to testCompile 'org.testng:testng:6.8.1' and add
-    // 'test.useTestNG()' to your build script.
+    compile group: 'me.suhyuk', name: 'common-logger', version: '1.0'
+
     testCompile 'junit:junit:4.12'
     testCompile group: 'org.springframework', name: 'spring-test', version: springVersion
     testCompile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'

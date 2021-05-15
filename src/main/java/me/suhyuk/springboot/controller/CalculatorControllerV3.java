@@ -1,6 +1,7 @@
 package me.suhyuk.springboot.controller;
 
 import me.suhyuk.springboot.aspect.LogExecutionTime;
+import me.suhyuk.springboot.aspect.LogRunningTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,7 +43,7 @@ public class CalculatorControllerV3 implements ICalculatorController {
     }
 
     @Override
-    @LogExecutionTime
+    @LogRunningTime
     @GetMapping("subtract")
     public String subtract(@RequestParam(defaultValue = "0") String x,
                            @RequestParam(defaultValue = "0") String y) {
@@ -51,7 +52,7 @@ public class CalculatorControllerV3 implements ICalculatorController {
     }
 
     @Override
-    @LogExecutionTime
+    @LogRunningTime
     @GetMapping("multiply")
     public String multiply(@RequestParam(defaultValue = "1") String x,
                            @RequestParam(defaultValue = "1") String y) {
@@ -60,7 +61,7 @@ public class CalculatorControllerV3 implements ICalculatorController {
     }
 
     @Override
-    @LogExecutionTime
+    @LogRunningTime
     @GetMapping("divide")
     public String divide(@RequestParam(defaultValue = "1") String x,
                          @RequestParam(defaultValue = "1") String y) {

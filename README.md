@@ -111,6 +111,117 @@ public void serve() throws InterruptedException {
 }
 ```
 
+
+## 5. 멀티 프로젝트 구성
+> 기존 프로젝트가 싱글 프로젝트이므로 별도의 브랜치(private/psyoblade)를 통해 구성을 변경합니다
+
+* 그레이들 버전 통일
+  - Spring Boot plugin requires Gradle 4.4 or later. The current version is Gradle 3.4.1
+```bash
+$ cat gradle/wrapper/gradle-wrapper.properties
+distributionUrl=https\://services.gradle.org/distributions/gradle-4.4-all.zip
+distributionBase=GRADLE_USER_HOME
+distributionPath=wrapper/dists
+zipStorePath=wrapper/dists
+zipStoreBase=GRADLE_USER_HOME
+```
+
+
+* 멀티 프로젝트 구성을 변경
+```bash
+$ cat settings.gradle
+rootProject.name = 'spring-boot-example'
+include 'example-common', 'example-web'
+
+$ tree -L 3
+example-common/src/main/java
+example-common/src/main/resources
+example-web/src/main/java
+example-web/src/main/resources
+
+$ cat build.gradle
+buildscript {
+  ext {
+    springBootVersion = '2.1.6.RELEASE'
+  }
+
+  repositories { // 반드시 buildscript 및 subproject 모두 명시되어야 합니다
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    classpath "io.spring.gradle:dependency-management-plugin:0.6.0.RELEASE"
+  }
+}
+
+subprojects {
+  group 'me.suhyuk'
+  version '1.0'
+
+  apply plugin: 'java'
+  apply plugin: 'org.springframework.boot'
+  apply plugin: 'io.spring.dependency-management'
+
+  sourceCompatibility = 1.8
+
+  repositories {
+    mavenCentral()
+  }
+
+  dependencies {
+    testCompile group: 'junit', name 'junit', version: '4.12'
+  }
+}
+
+project('example-common') {
+  dependencies {
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: springBootVersion
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: springBootVersion
+  }
+}
+
+project('example-web') {
+  dependencies {
+    compile project('example-common')
+  }
+}
+```
+
+
+## 6. 별도 라이브러리를 통한 AOP 연동
+> 멀티 프로젝트를 통해서 연동하려고 private/psyoblade 브랜치를 통해 테스트 해보았으나, AOP 의 경우 프로젝트 참조로는 제대로 찾지 못 했으며, 별도의 라이브러리로 등록 후 테스트 하였습니다
+
+* [SpringAOP](https://github.com/psyoblade/spring-boot-for-dummies/tree/master/springaop) 예제 프로젝트를 통해 기존 LogExecutionTime 을 빌드합니다 
+  - maven publish 가 필요하지만 로컬에서 빌드 후 바이너리를 복사합니다
+  - 등록된 라이브러리를 참조하여 테스트합니다  
+```bash
+$ ./gradlew build -x test :publishToMavenLocal
+$ cp ~/.m2/repository/me/suhyuk/common-logger/1.0/common-logger-1.0.jar libs
+
+$ cat build.gradle
+...
+    compile group: 'me.suhyuk', name: 'common-logger', version: '1.0'
+...
+```
+
+* 비교를 위해서 로컬 Aspect 를 LogRunningAspect 로 구성한 두이, 덧셈은 LogExecutionAspect 나머지는 연산은 LogRunningAspect 를 통해 로깅하게 합니다
+  - 아래와 같이 2가지 다른 방식의 호출이 동작함을 확인 합니다
+```bash
+2021-05-16 02:55:29.648  INFO 33836 --- [nio-8080-exec-1] m.s.s.aspect.LogExecutionAspect          : StopWatch '': running time (millis) = 286
+-----------------------------------------
+ms     %     Task name
+-----------------------------------------
+00286  100%  
+
+2021-05-16 02:55:34.591  INFO 33836 --- [nio-8080-exec-3] m.s.springboot.aspect.LogRunningAspect   : StopWatch '': running time (millis) = 514
+-----------------------------------------
+ms     %     Task name
+-----------------------------------------
+00514  100%  
+```
+
+
 ## 9. References
 * [Measure Elapsed Time in Java](https://www.baeldung.com/java-measure-elapsed-time)
 * [Spring @RequestParam Annotation](https://www.baeldung.com/spring-request-param)
